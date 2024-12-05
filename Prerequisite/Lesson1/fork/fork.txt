@@ -1,0 +1,8 @@
+x = 3
+fork();
+pf()
+fork();
+pf()
+fork();
+pf()
+

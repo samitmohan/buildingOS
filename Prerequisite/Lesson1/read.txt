@@ -1,0 +1,50 @@
+# system calls are same as interrupt / trap calls
+system call is basically entry to kernel mode.
+
+how system calls are executed -:
+    printf("hello") : since printf is a system call (we need kernel to print on
+    the monitor : this gets stored in a register {special register called rax})
+    there is a table of numbers and system_call_function
+    1 : address of printf
+    2 : address of scanf
+    3 : address of fork
+
+    mov rax 1
+    then it'll go to address of printf (where printf wrapper function is
+    actually written (it's called write() in assembly))
+    this write() is the actual write which handles IO operations.
+    now what about arguments? (like printf("hello")) how to know what to print?
+    for this there are other registers/stack to store all the args..
+
+    move rax 1
+    move R1 "hello" # similarily for other arguments we store it in a stack
+    sys_call # this tells computer to switch to kernel mode (mode 0) and
+    implement (look for 1 in the lookup table : find printf : go to that address
+    of actual printf (write() function) and then using R1 register/stack of
+    arguments, print it on the screen (how? -:)
+	actual function puts the real output in another register and then user reads
+	that register : hello
+
+table = system call table (same as interrupt service in COA) pauses the current
+execution and runs on kernel mode and then returns back to user mode once done.
+this is how an actual printf or system call function works
+
+how fork works, how exec works we've already seen with code.
+
+-- High Level --
+
+~CPU will pause the curretn execution (after syscall written in user mode)
+~Save the registers value
+~Switch the mode
+~Load RAX value and got o system call table (Interrupt Vector Table)
+~Find the address of kernel code (Interrupt Service Routine)
+~If Kernel function requires arguments then check stack/specific location of
+arguments (like in printf(**args))
+~Execute the interrupt service routine (kernel code)
+~Placing the return value in some register / location
+~Switch mode bit from 0 to 1 (reti command basically how a subroutine works)
+
+As you can tell, system calls are very slow. Function calls are much faster (no
+transfer to kernel and no overheads)
+
+
