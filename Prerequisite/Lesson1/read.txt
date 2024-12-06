@@ -46,5 +46,36 @@ arguments (like in printf(**args))
 
 As you can tell, system calls are very slow. Function calls are much faster (no
 transfer to kernel and no overheads)
+-----------
+Threads : lightweight process, great invention
 
+Why not create different processes all the time?
+~ Context Switching takes time
+~ Different address space
+~ Interprocess communication is required (big headache)
 
+Threads are so cool cuz they support concurrency (single core) and parallelism (multiple core CPUs)
+
+Memory management is the core of OS
+
+Every transition in process states is a system call. If interrupt / syscall
+occurs in c code, it goes to the assembly code function of scheduler which
+handles the scheduler (more on this when scheduling algorithms come)
+
+Need to write my own scheduler, libraries are there.
+
+User Level Threads
+Disadvantages -:
+    Not visible to kernel hence OS can't make decisions about scheduling.
+    OS doesn't know about user level threads so if one thread gets blocked, all
+    does
+Advantages -:
+    Fast to create (no sys call needed)
+    No Context Switch (Kernel doesn't have to maintain different states)
+
+# How Scheduler Works
+Every process has some info to store -> PCB, Registers in use etc  ... Where do
+we store this information ? in memory (privileged area of memory : kernel stack)
+in user mode : p1 is running, p1 timer is over, p1 wants to leave cpu by choice
+: bcs of this P1 will be in kernel mode (system call will be made) : context of
+p1 saved in kernel mode and then you run the scheduler which decides what process should run now.
