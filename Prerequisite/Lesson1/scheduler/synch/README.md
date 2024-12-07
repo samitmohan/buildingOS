@@ -48,7 +48,7 @@ while (true) {
 	while (interested[person2] and turn == person2); // if person2 interested and his turn also : let him go
 	// else let person 1 enter CS
 
-	// person1 leaves critical section 
+	// person1 leaves critical section
 	interested[person1] = false;
 	// remainder section
 }
@@ -59,3 +59,24 @@ Peterson’s solution is software-based solution and software-based solutions ar
 work on modern computer architectures. As it is code and slow as compared to hardware. Peterson's
 algorithm is a mutual exclusion algorithm that can be used on multiprocessor systems. It works by
 using shared memory to coordinate the threads.
+
+## Hardware Solutions
+
+1) Disable Interrupt : CS problem can be solved if we could prevent interrupts from occuring while a shared variable was being modified
+
+```c++
+while (true) {
+    // disable interrupts
+    // CS
+    // enable interrupts
+    // remainder
+}
+```
+Disadv : starvation allowed
+
+2) Atomic Operations : execute read-modify-write operations atomically on a memory location
+
+Adv : applicable to any number of processes on single/multiple processors sharing memory
+Disadv : busy waiting is possible : starvation possible
+
+To solve this we have Semaphores.
