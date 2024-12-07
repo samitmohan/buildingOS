@@ -5,8 +5,8 @@ section. The section of code implementing this request is the entry section. The
 be followed by an exit section. The remaining code is the remainder section.
 
 A solution to the critical-section problem must satisfy the following three requirements:
-a) Mutual exclusion. If process Pi is executing in its critical section, then no other processes can
-be executing in their critical sections.
+
+a) Mutual exclusion. If process Pi is executing in its critical section, then no other processes can be executing in their critical sections.
 
 b) Progress. If no process is executing in its critical section and some processes wish to enter
 their critical sections, then only those processes that are not executing in their remainder
@@ -14,6 +14,7 @@ sections can participate in deciding which will enter its critical section next,
 cannot be postponed indefinitely (indefinitely = अनिश्‍चित).
 
 With above two process we can ensure that there will be exactly one process in critical section.
+
 c) Bounded waiting. There exists a bound, or limit, on the number of times that other processes
 are allowed to enter their critical sections after a process has made a request to enter its
 critical section and before that request is granted.
@@ -38,6 +39,7 @@ exits the critical section and attempts to re-enter, show that first must not be
 Peterson’s solution and hardware solutions : (only works for 2 processes at max)
 
 # pseudo code
+```c++
 int turn; // i might be ready but it's okay if you execute others
 boolean interested[2]; // who's ready to enter it's CS
 while (true) {
@@ -50,7 +52,7 @@ while (true) {
 	interested[person1] = false;
 	// remainder section
 }
-
+```
 Both processes can be ready to execute in it's CS so this will be handled by interested[2] but who's going to execute CS is decided by turn
 
 Peterson’s solution is software-based solution and software-based solutions are not guaranteed to
